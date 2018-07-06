@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_WRITE = 1001 ;
     private boolean permissionGranted;
-    private Button mButtonCheckPermisson;
 
 
     @Override
@@ -24,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mButtonCheckPermisson = findViewById(R.id.button);
+        Button mButtonCheckPermisson = findViewById(R.id.button);
         mButtonCheckPermisson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!permissionGranted){
+                    // calling the checkPermission method
                     checkPermissions();
                     return;
                 }
@@ -36,20 +36,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /* Checks if external storage is available for read and write */
+    /**
+     * Checks if external storage is available for read and write
+     * @return
+     */
+
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }
 
-    /* Checks if external storage is available to at least read */
+    /**
+     * checks if external storage is available to at least read.
+     * @return
+     */
     public boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
         return (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
 
-    // Initiate request for permissions.
+    /**
+     * method to initiate request for permissions.
+     * @return
+     */
+
     private boolean checkPermissions() {
 
         if (!isExternalStorageReadable() || !isExternalStorageWritable()) {
@@ -70,7 +81,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Handle permissions result
+    /**
+     * Handle the permission result.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
